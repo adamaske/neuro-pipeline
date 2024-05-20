@@ -1,0 +1,3 @@
+[submodule "Modules/Logger"]
+	path = Modules/Logger
+	url = https://github.com/adamaske/Logger
