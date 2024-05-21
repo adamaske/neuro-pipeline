@@ -15,14 +15,6 @@ void NeuroPipeline::Initalize()
 	filesystem = std::make_shared<NeuroPipelineFilesystem>();
 
 	LoadPipeline();
-	//auto experiment = filesystem->CreateExperiment("Experiment_02", 
-	//	"C:/dev/NeuroPipeline/Resources/Experiment_02");
-	//
-	//filesystem->AppendDirectory(experiment, "C:/dev/NeuroPipeline/Resources/Experiment_01");
-	//
-	//filesystem->Print();
-	//
-	//filesystem->DeleteExperiment("C:/dev/NeuroPipeline/Resources/Experiment_02/Experiment_02.expr");
 }
 
 void NeuroPipeline::Run() {
@@ -45,6 +37,7 @@ void NeuroPipeline::LoadPipeline()
 	std::cout << "Enter location of .pipe file :";
 	std::string location;
 	std::getline(std::cin, location);
+
 	pipeline = filesystem->LoadPipeline(location);
 	if (!pipeline) {
 		spdlog::error("No .pipe file found...");
