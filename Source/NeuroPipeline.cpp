@@ -1,10 +1,10 @@
 #include "NeuroPipeline.h"
 
-#include <spdlog/spdlog.h>
-#include "Config.h"
-
 #include <iostream>
 #include <string>
+#include <spdlog/spdlog.h>
+
+#include "Config.h"
 
 void NeuroPipeline::Initalize()
 {
@@ -14,26 +14,19 @@ void NeuroPipeline::Initalize()
 
 	filesystem = std::make_shared<NeuroPipelineFilesystem>();
 
+
 	LoadPipeline();
 }
 
 void NeuroPipeline::Run() {
 	Initalize();
 
-	if (!pipeline) {
-		spdlog::info("No pipeline loaded...");
-		return;
-	}
 	
-	//Probe user input 
-
-	//Talk to python server
-
-	//
 }
 
 void NeuroPipeline::LoadPipeline()
 {
+
 	std::cout << "Enter location of .pipe file :";
 	std::string location;
 	std::getline(std::cin, location);

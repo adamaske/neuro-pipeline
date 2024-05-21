@@ -11,11 +11,11 @@ enum Filetype {
 };
 
 inline static std::map<Filetype, std::string> type_to_suffix_map = {
-		{	SNIRF		,	".snirf"	},
-		{	CSV			,	".csv"		},
-		{	EEG_FILE	,	".EEG"		},
-		{	EXPERIMENT	,	".expr"		},
-		{	PIPELINE	,	".pipe"		},
+	{	SNIRF		,	".snirf"	},
+	{	CSV			,	".csv"		},
+	{	EEG_FILE	,	".EEG"		},
+	{	EXPERIMENT	,	".expr"		},
+	{	PIPELINE	,	".pipe"		},
 };
 
 inline static std::map<std::string, Filetype> suffix_to_type_map = {
@@ -30,7 +30,7 @@ inline const std::string FiletypeToSuffix(Filetype filetype) {
 	if (type_to_suffix_map.find(filetype) != type_to_suffix_map.end()) {
 		return type_to_suffix_map[filetype];
 	}
-	return "ERROR";
+	return "INVALID";
 }
 inline const Filetype SuffixToFiletype(std::string suffix) {
 	if (suffix_to_type_map.find(suffix) != suffix_to_type_map.end()) {

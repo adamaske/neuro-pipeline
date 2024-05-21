@@ -26,7 +26,7 @@ add_executable(${PROJECT_NAME}
 "Source/NeuroPipeline.cpp"
 "Source/Files.cpp" 
 "Source/Pipeline.cpp"
-"C:/dev/NeuroPipeline/Source/MainWindow.cpp")
+)
 
 target_include_directories(${PROJECT_NAME} PRIVATE 
 "${CMAKE_CURRENT_SOURCE_DIR}/Include" 
