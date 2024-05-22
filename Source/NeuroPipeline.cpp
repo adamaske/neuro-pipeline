@@ -6,16 +6,22 @@
 
 #include "Config.h"
 
+#include "UI/MainWindow.h"
+#include "UI/OpenPipelineDialog.h"
+
 void NeuroPipeline::Initalize()
 {
 	spdlog::info("NeuroPipeline " +
 		std::to_string(PROJECT_VERSION_MAJOR) + "." +
 		std::to_string(PROJECT_VERSION_MINOR));
 
+	spdlog::info("Initalizing...");
+
 	filesystem = std::make_shared<NeuroPipelineFilesystem>();
 
+	LaunchMainWindow();
 
-	LoadPipeline();
+	//LoadPipeline();
 }
 
 void NeuroPipeline::Run() {
@@ -24,18 +30,21 @@ void NeuroPipeline::Run() {
 	
 }
 
-void NeuroPipeline::LoadPipeline()
+void NeuroPipeline::Shutdown()
 {
 
-	std::cout << "Enter location of .pipe file :";
-	std::string location;
-	std::getline(std::cin, location);
+	delete main_window;
+}
 
-	pipeline = filesystem->LoadPipeline(location);
-	if (!pipeline) {
-		spdlog::error("No .pipe file found...");
-		return;
-	}
+void NeuroPipeline::LoadPipeline()
+{
+	spdlog::info("Loading Pipeline...");
+	OpenPipelineDialog* dialog = new OpenPipelineDialog(main_window);
+
+	int result = dialog->exec();
+	spdlog::info("Pipeline file : " + dialog->filepath);
+
+	delete dialog;
 }
 
 void NeuroPipeline::LoadExperiment()
@@ -45,6 +54,14 @@ void NeuroPipeline::LoadExperiment()
 void NeuroPipeline::CreateExperiment()
 {
 
+}
+
+void NeuroPipeline::LaunchMainWindow()
+{
+	main_window = new MainWindow(nullptr, this);
+	main_window->show();
+
+	spdlog::info("Main Window Created");
 }
 
 

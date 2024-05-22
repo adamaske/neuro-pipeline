@@ -10,13 +10,18 @@ private:
 
 	std::shared_ptr<Pipeline> pipeline = nullptr;
 
+	MainWindow* main_window = nullptr;
 public:
 	void Initalize();
+
 	void Run();
+
+	void Shutdown();
 
 	void LoadPipeline();
 
 	void LoadExperiment();
 	void CreateExperiment();
 
+	void LaunchMainWindow();
 };

@@ -26,6 +26,8 @@ add_executable(${PROJECT_NAME}
 "Source/NeuroPipeline.cpp"
 "Source/Files.cpp" 
 "Source/Pipeline.cpp"
+"Source/UI/MainWindow.cpp"
+"Source/UI/OpenPipelineDialog.cpp"
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE 
