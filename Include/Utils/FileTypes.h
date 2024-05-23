@@ -41,6 +41,9 @@ inline const Filetype SuffixToFiletype(std::string suffix) {
 
 inline const std::string GetSuffix(const std::string& filename) {
 	int idx = filename.find_last_of('.');
+	if (idx == -1) {
+		return "ERROR";
+	}
 	std::string suffix = filename.substr(idx, filename.size() - idx);
 	return suffix;
 }

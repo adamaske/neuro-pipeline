@@ -42,18 +42,18 @@ protected:
 
 private:
     void Open();
+    void Save();
+    void SaveAs();
 
     void CreateActions();
     void CreateMenus();
 
-//Actions
-    QAction* assistantAct;
-    QAction* clearAct;
     QAction* openAct;
-    QAction* exitAct;
-    QAction* aboutAct;
-    QAction* aboutQtAct; 
+    
+    QAction* saveAct;
+    QAction* saveAsAct;
 
+    QAction* exitAct;
 };
 
 #endif // MAINWINDOW_H

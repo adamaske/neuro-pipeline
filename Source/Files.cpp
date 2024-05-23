@@ -3,7 +3,7 @@
 #include <iostream>
 #include <filesystem>
 #include <fstream>
-
+#include <QFileDialog.h>
 #include <spdlog/spdlog.h>
 
 #include "Utils/FileTypes.h"
@@ -12,6 +12,24 @@ using recursive_directory_iterator = std::filesystem::recursive_directory_iterat
 
 NeuroPipelineFilesystem::NeuroPipelineFilesystem()
 {
+}
+
+void NeuroPipelineFilesystem::SavePipeline(std::shared_ptr<Pipeline> pipeline, const std::string& filepath)
+{
+	std::ofstream file(filepath);
+
+	pipeline->filepath = filepath;
+	auto json = PipelineToJSON(pipeline);
+	file << json.dump();
+	file.close();
+
+	spdlog::info("Pipeline saved : " + filepath);
+}
+
+void NeuroPipelineFilesystem::SavePipelineAs(std::shared_ptr<Pipeline> pipeline)
+{
+	QString filepath = QFileDialog::getSaveFileName(nullptr, "Save Pipeline", pipeline->filepath.c_str());
+	SavePipeline(pipeline, filepath.toStdString());
 }
 
 std::shared_ptr<Pipeline> NeuroPipelineFilesystem::LoadPipeline(const std::string& filepath)
@@ -38,31 +56,55 @@ std::shared_ptr<Pipeline> NeuroPipelineFilesystem::LoadPipeline(const std::strin
 	std::ifstream file(filepath);
 	nlohmann::json json = nlohmann::json::parse(file);
 	std::shared_ptr<Pipeline> pipeline = JSONToPipeline(json);
+	pipeline->filepath = filepath;
 
 	return pipeline;
 }
 
-void NeuroPipelineFilesystem::SavePipeline(std::shared_ptr<Pipeline> pipeline, const std::string& filepath)
+
+
+void NeuroPipelineFilesystem::SaveConfigFile(std::shared_ptr<NeuroPipelineConfig> config, const std::string& filepath)
 {
+	spdlog::info("Saving Config...");
 
 	std::ofstream file(filepath);
 
-	auto json = PipelineToJSON(pipeline);
+	auto json = ConfigToJSON(config);
 	file << json.dump();
 
 	file.close();
 
-	spdlog::info("Pipeline saved : " + filepath);
 }
 
-nlohmann::json NeuroPipelineFilesystem::PipelineToJSON(std::shared_ptr<Pipeline> pipeline)
+std::shared_ptr<NeuroPipelineConfig> NeuroPipelineFilesystem::LoadConfigFile(const std::string& filepath)
 {
-	return nlohmann::json();
+	spdlog::info("Loading Config...");
+
+	std::ifstream file(filepath);
+
+	auto json = nlohmann::json::parse(file);
+
+	std::shared_ptr<NeuroPipelineConfig> config = JSONToConfig(json);
+
+	return config;
 }
 
-std::shared_ptr<Pipeline> NeuroPipelineFilesystem::JSONToPipeline(nlohmann::json json)
+nlohmann::json NeuroPipelineFilesystem::ConfigToJSON(std::shared_ptr<NeuroPipelineConfig> config)
 {
-	return std::shared_ptr<Pipeline>();
+	nlohmann::json json;
+
+	json["last_pipeline_filepath"] = config->last_pipeline_filepath;
+
+	return json;
+}
+
+std::shared_ptr<NeuroPipelineConfig> NeuroPipelineFilesystem::JSONToConfig(nlohmann::json json)
+{
+	std::shared_ptr<NeuroPipelineConfig> config = std::make_shared<NeuroPipelineConfig>();
+
+	config->last_pipeline_filepath = json["last_pipeline_filepath"];
+
+	return config;
 }
 
 
