@@ -5,9 +5,7 @@
 
 #include "NeuroPipeline.h"
 
-#include "UI/MainWindow.h"
 int main(int argc, char* argv[]) {
-
 	QApplication qapp(argc, argv);
 
 	std::shared_ptr<NeuroPipeline> application = std::make_shared<NeuroPipeline>();

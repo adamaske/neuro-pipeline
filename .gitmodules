@@ -1,12 +1,6 @@
-[submodule "Modules/Logger"]
-	path = Modules/Logger
-	url = https://github.com/adamaske/Logger
 [submodule "Vendor/spdlog"]
 	path = Vendor/spdlog
 	url = https://github.com/gabime/spdlog
 [submodule "Vendor/json"]
 	path = Vendor/json
 	url = https://github.com/nlohmann/json
-[submodule "Vendor/matplotlib-cpp"]
-	path = Vendor/matplotlib-cpp
-	url = https://github.com/lava/matplotlib-cpp

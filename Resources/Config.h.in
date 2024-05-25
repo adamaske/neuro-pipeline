@@ -4,6 +4,7 @@
 #define PROJECT_VERSION_MAJOR @NeuroPipeline_VERSION_MAJOR@
 #define PROJECT_VERSION_MINOR @NeuroPipeline_VERSION_MINOR@
 
+#define RESOUCES_DIRECTORY "@RESOURCES_DIR@"
 
 struct NeuroPipelineConfig {
 	std::string last_pipeline_filepath = "C:/dev/NeuroPipeline/Resources/Experiment_01/test.pipe";
