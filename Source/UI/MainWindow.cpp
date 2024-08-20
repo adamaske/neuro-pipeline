@@ -6,13 +6,10 @@
 #include <spdlog/spdlog.h>
 
 #include "UI/LoadPipelineDialog.h"
-#include "NeuroPipeline.h"
 
-MainWindow::MainWindow(QWidget* parent, NeuroPipeline* np)
-    : QMainWindow(parent), neuro_pipeline(np)
-    , ui(new Ui::MainWindow)   
+MainWindow::MainWindow(QWidget* parent)
+    : QMainWindow(parent)
 {
-    ui->setupUi(this);
 
     setWindowTitle("NeuroPipeline");
     resize(800, 600);
@@ -23,27 +20,30 @@ MainWindow::MainWindow(QWidget* parent, NeuroPipeline* np)
 
 MainWindow::~MainWindow()
 {
-    delete ui;
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    neuro_pipeline->Shutdown();
+    spdlog::info("Closed");
+    //neuro_pipeline->Shutdown();
 }
 
 void MainWindow::Open()
 {
-    neuro_pipeline->PromptLoadPipeline();
+    spdlog::info("Open");
+    //neuro_pipeline->PromptLoadPipeline();
 }
 
 void MainWindow::Save()
 {
-    neuro_pipeline->SaveCurrentPipeline();
+    spdlog::info("Save");
+    //neuro_pipeline->SaveCurrentPipeline();
 }
 
 void MainWindow::SaveAs()
 {
-    neuro_pipeline->SaveCurrentPipelineAs();
+    spdlog::info("Save As");
+    //neuro_pipeline->SaveCurrentPipelineAs();
 }
 
 void MainWindow::CreateActions()

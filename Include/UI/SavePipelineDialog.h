@@ -14,7 +14,6 @@ QT_END_NAMESPACE
 
 #include <memory>
 #include "Pipeline.h"
-#include "Files.h"
 
 #define SAVE_AS_PIPELINE 2
 #define SAVE_PIPELINE 1
@@ -26,13 +25,11 @@ class SavePipelineDialog : public QDialog
     //Q_OBJECT
 
 public:
-    SavePipelineDialog(std::shared_ptr<Pipeline> _pipeline, 
-        std::shared_ptr<NeuroPipelineFilesystem> _filesystem);
+    SavePipelineDialog(const np::pipeline::Pipeline& pipe);
     ~SavePipelineDialog();
 
     std::string filepath = "C:/";
-    std::shared_ptr<Pipeline> pipeline;
-    std::shared_ptr<NeuroPipelineFilesystem> filesystem;
+    np::pipeline::Pipeline pipeline;
 private:
 
     QToolButton* save_button       = nullptr;

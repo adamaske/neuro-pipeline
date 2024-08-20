@@ -24,17 +24,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-#==== QT =========
-set(CMAKE_PREFIX_PATH $ENV{QTDIR})
+# QT
+set(CMAKE_PREFIX_PATH $ENV{QTDIR}) # finds QTDIR path variable
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${CMAKE_CURRENT_SOURCE_DIR}/Forms")
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets Gui)
-
-#==== PYTHON =====
-set(CMAKE_PREFIX_PATH $ENV{PYDIR})
-find_package (Python REQUIRED COMPONENTS Interpreter Development)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Gui Qml)
 
 add_subdirectory(Vendor)
-
 configure_file("${RESOURCES_DIR}/Config.h.in" "${INCLUDE_DIR}/Config.h")
 
 qt_standard_project_setup()
@@ -52,6 +47,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 Vendor 
 Qt6::Core 
 Qt6::Widgets 
-Python::Python
+Qt6::Gui
+Qt6::Qml
 compiler_flags 
 )

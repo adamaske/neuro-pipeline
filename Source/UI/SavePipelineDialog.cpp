@@ -8,11 +8,9 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
-SavePipelineDialog::SavePipelineDialog(std::shared_ptr<Pipeline> _pipeline,
-    std::shared_ptr<NeuroPipelineFilesystem> _filesystem)
+SavePipelineDialog::SavePipelineDialog(const np::pipeline::Pipeline& pipe)
 {
-    pipeline = _pipeline;
-    filesystem = _filesystem;
+    pipeline = pipeline;
 
     setWindowTitle("Save Pipeline");
     resize(400, 50);
@@ -55,13 +53,13 @@ SavePipelineDialog::~SavePipelineDialog()
 
 void SavePipelineDialog::Save()
 {
-    filesystem->SavePipeline(pipeline, pipeline->filepath);
+    np::pipeline::Save(pipeline);
     done(SAVE_PIPELINE);
 }
 
 void SavePipelineDialog::SaveAs()
 {
-    filesystem->SavePipelineAs(pipeline);
+    np::pipeline::SaveAs(pipeline);
     done(SAVE_AS_PIPELINE);
 }
 

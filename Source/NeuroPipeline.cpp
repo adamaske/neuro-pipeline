@@ -8,55 +8,40 @@
 #include "UI/LoadPipelineDialog.h"
 #include "UI/SavePipelineDialog.h"
 
-#define NP_CONFIG_FILEPATH "C:/dev/NeuroPipeline/Resources/neuro_config.np"
 
-void NeuroPipeline::Initalize()
+void np::NeuroPipeline::Initalize() 
 {
-	spdlog::info("NeuroPipeline " +
+	spdlog::info("Welcome to NeuroPipeline " +
 		std::to_string(PROJECT_VERSION_MAJOR) + "." +
-		std::to_string(PROJECT_VERSION_MINOR));
+		std::to_string(PROJECT_VERSION_MINOR) + "!");
 
-	filesystem = std::make_shared<NeuroPipelineFilesystem>();
-	config = filesystem->LoadConfigFile(NP_CONFIG_FILEPATH);
+	config = np::config::ReadConfig(NP_CONFIG_FILEPATH);
+
+	pipeline = np::pipeline::Read(config.last_pipeline_filepath);
 	
-	int loaded = PromptLoadPipeline();
-	if (!loaded) {
-		spdlog::error("No Pipeline loaded... Exiting...");
-		return;
-	}
 
-	LaunchMainWindow();
+	spdlog::info("Intialization completed...");
 
 	Run();
 }
 
-void NeuroPipeline::Run() {
+void np::NeuroPipeline::Run() {
 
-	spdlog::info("Main Loop");
+	main_window.show();
+
 	
 }
 
-void NeuroPipeline::Shutdown()
+void np::NeuroPipeline::Shutdown()
 {
-	if (config && pipeline) {
-		config->last_pipeline_filepath = pipeline->filepath;
-	}
+	config.last_pipeline_filepath = pipeline.filepath;
+	np::config::WriteConfig(config);
 
-	filesystem->SaveConfigFile(config, NP_CONFIG_FILEPATH);
-
-	delete main_window;
-
-	spdlog::info("Closed");
 }
 
-void NeuroPipeline::LaunchMainWindow()
+int np::NeuroPipeline::PromptSavePipeline()
 {
-	main_window = new MainWindow(nullptr, this);
-	main_window->show();
-}
-int NeuroPipeline::PromptSavePipeline()
-{
-	SavePipelineDialog* save = new SavePipelineDialog(pipeline, filesystem);
+	SavePipelineDialog* save = new SavePipelineDialog(pipeline);
 	int saved = save->exec();
 
 	if (saved == SAVE_CANCELED) {
@@ -66,41 +51,28 @@ int NeuroPipeline::PromptSavePipeline()
 	return 1;
 }
 
-int NeuroPipeline::PromptLoadPipeline()
+int np::NeuroPipeline::PromptLoadPipeline()
 {
-	if (pipeline) { //If we already have a pipeline loaded, save current pipeline
-		int saved = PromptSavePipeline();
-		if (saved == 0) { //If user cancled save (X button) then we want to cancel loading prompt aswell.
-			return 0;
-		}
-	}
-	LoadPipelineDialog* load = new LoadPipelineDialog(nullptr,
-		pipeline ? pipeline->filepath :
-		(config ? config->last_pipeline_filepath : ""));
 
-	int loaded = load->exec();
-	if (loaded == LOAD_CANCLED) {
-		return 0;
-	}
-
-	pipeline = filesystem->LoadPipeline(load->filepath);
-	return 1;
-}
-
-
-void NeuroPipeline::SaveCurrentPipeline()
-{
-	filesystem->SavePipeline(pipeline, pipeline->filepath);
-}
-
-void NeuroPipeline::SaveCurrentPipelineAs()
-{
-	filesystem->SavePipelineAs(pipeline);
-}
-
-void NeuroPipeline::SetPipeline(std::shared_ptr<Pipeline> _pipeline)
-{
-	pipeline = _pipeline;
+	//if (pipeline) { //If we already have a pipeline loaded, save current pipeline
+	//	int saved = PromptSavePipeline();
+	//	if (saved == 0) { //If user cancled save (X button) then we want to cancel loading prompt aswell.
+	//		return 0;
+	//	}
+	//}
+	//LoadPipelineDialog* load = new LoadPipelineDialog(nullptr,
+	//	pipeline ? pipeline->filepath :
+	//	(config.last_pipeline_filepath.size() > 0 ?
+	//		config.last_pipeline_filepath : ""));
+	//
+	//int loaded = load->exec();
+	//if (loaded == LOAD_CANCLED) {
+	//	return 0;
+	//}
+	//
+	//pipeline = filesystem->LoadPipeline(load->filepath);
+	//return 1;
+	return 0;
 }
 
 

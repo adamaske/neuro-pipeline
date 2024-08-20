@@ -18,23 +18,16 @@ class Assistant;
 class TextEdit;
 class NeuroPipeline;
 
-namespace Ui {
-class MainWindow;
-}
-
 class MainWindow : public QMainWindow
 {
     //Q_OBJECT
 
 private:
-    Ui::MainWindow *ui;
-
-    NeuroPipeline* neuro_pipeline = nullptr;
 
     QMenu* fileMenu;
     QMenu* helpMenu;
 public:
-    explicit MainWindow(QWidget *parent = nullptr, NeuroPipeline* np = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 protected:
@@ -54,6 +47,7 @@ private:
     QAction* saveAsAct;
 
     QAction* exitAct;
+
 };
 
 #endif // MAINWINDOW_H
