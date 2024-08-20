@@ -8,12 +8,8 @@
 #include <filesystem>
 #include <source_location>
 
+//std::cout << std::source_location::current().file_name() << std::endl; // requires C++20
 int main(int argc, char* argv[]) {
-
-	std::cout << __FILE__ << '\n';
-	std::cout << std::source_location::current().file_name() << '\n'; // requires C++20
-
-	return 0;
 	QApplication qapp(argc, argv);
 	
 	np::NeuroPipeline np;

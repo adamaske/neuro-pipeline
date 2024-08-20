@@ -8,7 +8,9 @@
 
 #include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
-
+#include <stdexcept>
+#include <limits>
+#include <iostream>
 namespace np {
 	namespace pipeline {
 
@@ -36,21 +38,9 @@ namespace np {
 			return pipeline;
 		}
 
-		//Only writes an encoded pipeline to a filepath, doesnt care about anything else
-		Pipeline Write(const np::pipeline::Pipeline& pipeline, const std::filesystem::path& path) {
-			std::ofstream file(path);
-
-			auto json = np::pipeline::EncodeJSON(pipeline);
-			file << json.dump();
-
-			file.close();
-
-			auto pl = DecodeJSON(json); //ReMOVE THIS
-			return pl;
-		}
-
 		// Only reads at a filepath, decodes pipeline and returns
-		Pipeline Read(const std::filesystem::path& path) {
+		inline Pipeline Read(const std::filesystem::path& path) {
+
 			std::ifstream file(path);
 			nlohmann::json json = nlohmann::json::parse(file);
 			auto pipeline = np::pipeline::DecodeJSON(json);
@@ -58,8 +48,23 @@ namespace np {
 			return pipeline;
 		}
 
+		//Only writes an encoded pipeline to a filepath, doesnt care about anything else
+		inline Pipeline Write(const np::pipeline::Pipeline& pipeline, const std::filesystem::path& path) {
+			std::ofstream file(path);
+
+			auto json = np::pipeline::EncodeJSON(pipeline);
+			auto dump = json.dump().c_str();
+			
+			if (!file.write(dump, sizeof(dump))) {
+
+			}
+			file.close();
+			return pipeline;
+		}
+
+		
 		// Should check for valid addresses 
-		void Save(const np::pipeline::Pipeline& pipeline) {
+		inline void Save(const np::pipeline::Pipeline& pipeline) {
 			auto path = std::filesystem::path(pipeline.filepath);
 
 			//Only allow writing if the filepath is legal
@@ -67,17 +72,13 @@ namespace np {
 		}
 
 		//
-		void SaveAs(const np::pipeline::Pipeline& pipeline) {
+		inline void SaveAs(const np::pipeline::Pipeline& pipeline) {
 			QString filepath = QFileDialog::getSaveFileName(nullptr, "Save Pipeline", pipeline.filepath.c_str());
 			Write(pipeline, filepath.toStdString());
 		}
 
-		Pipeline Load(const std::filesystem::path& path) {
-			Pipeline p = { };
-			return p;
-		}
 
-		bool IsPipeline(const std::filesystem::path& path) {
+		inline bool IsPipeline(const std::filesystem::path& path) {
 			if (!std::filesystem::exists(path)) {
 				spdlog::info("Path does not exist : ", path.generic_string());
 				return false;

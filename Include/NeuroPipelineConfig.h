@@ -49,15 +49,14 @@ namespace np {
 			file.close();
 		}
 
-		inline NeuroPipelineConfig ReadConfig(std::string filepath) {
-			auto path = std::filesystem::path(NP_CONFIG_FILEPATH);
-			std::ifstream file(path.c_str());
+		inline NeuroPipelineConfig ReadConfig(const std::filesystem::path& path) {
+			std::ifstream file(path);
 
 			auto json = nlohmann::json::parse(file);
+			auto config = DecodeJSON(json);
 
 			file.close();
 
-			auto config = DecodeJSON(json);
 			return config;
 		}
 

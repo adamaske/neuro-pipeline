@@ -16,9 +16,10 @@ void np::NeuroPipeline::Initalize()
 		std::to_string(PROJECT_VERSION_MINOR) + "!");
 
 	config = np::config::ReadConfig(NP_CONFIG_FILEPATH);
+	spdlog::info("config loaded : {}", NP_CONFIG_FILEPATH);
 
 	pipeline = np::pipeline::Read(config.last_pipeline_filepath);
-	
+	spdlog::info("pipeline loaded : {}", pipeline.filepath);
 
 	spdlog::info("Intialization completed...");
 
@@ -26,10 +27,10 @@ void np::NeuroPipeline::Initalize()
 }
 
 void np::NeuroPipeline::Run() {
+	main_window = new MainWindow();
+	main_window->show();
 
-	main_window.show();
-
-	
+	spdlog::info("main loop...");
 }
 
 void np::NeuroPipeline::Shutdown()

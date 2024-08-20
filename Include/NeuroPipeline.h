@@ -18,9 +18,9 @@ namespace np {
 
 		bool pipeline_loaded = 0;
 
-		MainWindow main_window;
+		MainWindow* main_window = nullptr;
 
-		np::Robot robot;
+		np::sim::Robot robot;
 	public:
 		void Initalize(); // Start
 		void Run(); // Main loop
