@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <string>
 #include <fstream>
 
@@ -21,6 +20,10 @@ namespace np {
 			std::string name;
 			std::string filepath;
 		};
+
+		inline bool ValidPipeline(const Pipeline& pipe) {
+			return true;
+		}
 
 		inline nlohmann::json EncodeJSON(const Pipeline& pipeline)
 		{

@@ -30,10 +30,15 @@ SavePipelineDialog::SavePipelineDialog(const np::pipeline::Pipeline& pipe)
     no_save_button->setText(tr("Don't Save"));
     connect(no_save_button, &QAbstractButton::clicked, this, &SavePipelineDialog::DontSave);
 
+    cancel_button = new QToolButton();
+    cancel_button->setText(tr("Cancel"));
+    connect(cancel_button, &QAbstractButton::clicked, this, &SavePipelineDialog::Cancel);
+
     button_box = new QDialogButtonBox();
     button_box->addButton(save_button, QDialogButtonBox::ActionRole);
     button_box->addButton(save_as_button, QDialogButtonBox::ActionRole);
     button_box->addButton(no_save_button, QDialogButtonBox::ActionRole);
+    button_box->addButton(cancel_button, QDialogButtonBox::ActionRole);
 
     //LAYOUT 
     QHBoxLayout* box_layout = new QHBoxLayout(); //Horizontal
@@ -49,6 +54,11 @@ SavePipelineDialog::SavePipelineDialog(const np::pipeline::Pipeline& pipe)
 
 SavePipelineDialog::~SavePipelineDialog()
 {
+}
+
+void SavePipelineDialog::closeEvent(QCloseEvent*)
+{
+    done(SAVE_CANCELED);
 }
 
 void SavePipelineDialog::Save()

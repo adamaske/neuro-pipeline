@@ -1,6 +1,4 @@
-#ifndef SAVEPIPELINEDIALOG_H
-#define SAVEPIPELINEDIALOG_H
-
+#pragma once
 #include <QDialog>
 
 QT_BEGIN_NAMESPACE
@@ -30,11 +28,14 @@ public:
 
     std::string filepath = "C:/";
     np::pipeline::Pipeline pipeline;
+protected:
+    void closeEvent(QCloseEvent*) override;
 private:
 
     QToolButton* save_button       = nullptr;
     QToolButton* save_as_button    = nullptr;
     QToolButton* no_save_button = nullptr;
+    QToolButton* cancel_button = nullptr;
     QDialogButtonBox* button_box   = nullptr;
 
     QLabel* prompt_label = nullptr;
@@ -45,7 +46,4 @@ private:
     void SaveAs();
     void DontSave();
     void Cancel();
-
 };
-
-#endif // SAVEPIPELINEDIALOG_H

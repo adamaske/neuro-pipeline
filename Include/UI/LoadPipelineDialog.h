@@ -1,6 +1,4 @@
-#ifndef LOADPIPELINEDIALOG_H
-#define LOADPIPELINEDIALOG_H
-
+#pragma once
 #include <QDialog>
 
 QT_BEGIN_NAMESPACE
@@ -41,4 +39,3 @@ private:
     void Cancel();
 };
 
-#endif // OPENPIPELINEDIALOG_H
