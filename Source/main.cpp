@@ -1,6 +1,9 @@
 #include <QApplication>
 #include "NeuroPipeline.h"
 
+#include <iostream>
+#include <filesystem>
+
 int main(int argc, char* argv[]) {
 	QApplication qapp(argc, argv);
 

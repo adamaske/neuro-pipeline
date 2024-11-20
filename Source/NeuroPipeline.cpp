@@ -22,9 +22,11 @@ void np::NeuroPipeline::Initalize()
 		std::to_string(PROJECT_VERSION_MAJOR) + "." +
 		std::to_string(PROJECT_VERSION_MINOR) + "!");
 
+
 // Open Config
-	config = np::config::ReadConfig(NP_CONFIG_FILEPATH);
-	spdlog::info("config loaded : {}", NP_CONFIG_FILEPATH);
+	config = np::config::ReadConfig(std::filesystem::path(CONFIG_PATH));
+	spdlog::info("config loaded : {}", std::filesystem::path(CONFIG_PATH).string());
+
 
 // Open previous Pipeline
 	//pipeline = np::pipeline::Read(config.last_pipeline_filepath);

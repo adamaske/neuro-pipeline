@@ -6,7 +6,7 @@
 #include <QMenuBar>
 #include <QWidget>
 
-#include "NeuroPipelineConfig.h"
+#include "Config.h"
 #include "Pipeline.h"
 
 namespace np {
@@ -15,7 +15,7 @@ namespace np {
 
 	private:
 
-		config::NeuroPipelineConfig config;
+		np::config::NeuroPipelineConfig config;
 		np::pipeline::Pipeline pipeline;
 
 

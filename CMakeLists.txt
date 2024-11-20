@@ -13,6 +13,7 @@ target_compile_options(compiler_flags INTERFACE
 )
 
 
+
 set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Include")
 set(SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source")
 set(RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Resources")
@@ -20,17 +21,24 @@ set(RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Resources")
 file(GLOB_RECURSE INCS "${INCLUDE_DIR}/*.h")
 file(GLOB_RECURSE SRCS "${SOURCE_DIR}/*.cpp")
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+
 # QT
-set(CMAKE_PREFIX_PATH $ENV{QTDIR}) # finds QTDIR path variable
+set(CMAKE_PREFIX_PATH $ENV{QTDIR})
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${CMAKE_CURRENT_SOURCE_DIR}/Forms")
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets Gui Qml)
 
+
 add_subdirectory(Vendor)
 configure_file("${RESOURCES_DIR}/Config.h.in" "${INCLUDE_DIR}/Config.h")
+
 
 qt_standard_project_setup()
 qt_add_executable(${PROJECT_NAME} ${SRCS})
@@ -51,3 +59,5 @@ Qt6::Gui
 Qt6::Qml
 compiler_flags 
 )
+
+install(DIRECTORY ${RESOURCES_DIR} DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
